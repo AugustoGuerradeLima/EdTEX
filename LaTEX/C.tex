@@ -1,0 +1,30 @@
+\section*{Anexo I - Revisitando a linguagem de programação C}
+\subsection*{Apontadores}
+\
+
+Para acessar o endereço de memória virtual de uma variável em C é utilizado o operador de referência $\&$, o endereço de memória é representado por 0x seguido de um número em base hexadecimal.
+
+Um apontador é um tipo de variável cuja função é armazenar um endereço de memória virtual, se um apontador $p$ armazena o endereço de uma variável $x$ é possível então dizer que $p$ aponta para o endereço de $x$.
+
+O processo de definir um apontador para um endereço significa que uma \textbf{referência} para o endereço é feita, já armazenar o identificador do endereço em uma variável é um processo de \textbf{dereferência}.
+
+\begin{lstlisting}[language=C, frame=single]
+    int x = 35;
+    int* p = &x; //Referencia
+
+    int d = *p; //Dereferencia
+\end{lstlisting}
+
+\subsection*{Aritmética de endereços}
+\
+
+A aritmética de endereços é importante para a alocação dinâmica. Na memória virtual, os endereços dos elementos de um vetor são armazenados de modo sequencial. Ao declarar um vetor $V$, sendo $i$ uma constante $i=0, 1 ...$ \textit{tamanho do vetor} $-1$, acessar $V[i]$ é idêntico a acessar $*(V+i)$.
+
+\begin{lstlisting}[language=C, frame=single]
+    int* V; 
+    V = malloc (10*sizeof(int));
+    //V[i]=*(V+i)
+\end{lstlisting}
+
+\subsection*{Alocação dinâmica}
+\
