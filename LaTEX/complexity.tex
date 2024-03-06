@@ -88,7 +88,7 @@ A desigualdade é verdadeira para todo $n\geq 1$, em outras palavras $n_0=1$.
 \begin{figure}
   \centering
   \includegraphics[width=0.4\linewidth]{img/O(f(n)).png}
-    \caption{$g(n)=O(f(n))$.}
+    \caption{$g(n)\in O(f(n))$.}
     \label{O(f(n))}
 \end{figure}
 
@@ -107,7 +107,7 @@ Dizer que a complexidade de tempo de execução de um algoritmo é $\Omega(f(n))
 \begin{figure}
   \centering
   \includegraphics[width=0.4\linewidth]{img/Omega.png}
-    \caption{$g(n)=\Omega(f(n))$.}
+    \caption{$g(n)\in\Omega(f(n))$.}
     \label{Omega}
 \end{figure}
 
@@ -133,7 +133,7 @@ Além disso $g(n)\in\Theta(f(n)) \Leftrightarrow f(n)\in\Theta(g(n))$.
 \begin{figure}
   \centering
   \includegraphics[width=0.4\linewidth]{img/Theta.png}
-    \caption{$g(n)=\Theta(f(n))$.}
+    \caption{$g(n)\in\Theta(f(n))$.}
     \label{Theta}
 \end{figure}
 
@@ -201,18 +201,18 @@ Assim, $2n\in o(n^2)$ é uma expressão válida para todos os valores de $k>0$ e
 As comparações assintóticas respeitam algumas identidades, considerando funções $f$ e $g$ assintoticamente positivas.
 
 \textbf{Reflexividade}
-\[f(n)=\Theta(f(n)).\]
+\[f(n)\in\Theta(f(n)).\]
 
 Aplica-se também as notações $O$ e $\Omega$.
 
 \textbf{Transitividade}
-\[f(n)=\Theta(f(n)), \ g(n)=\Theta(h(n)) \Rightarrow f(n)=\Theta(h(n)).\]
+\[f(n)\in\Theta(f(n)), \ g(n)\in\Theta(h(n)) \Rightarrow f(n)\in\Theta(h(n)).\]
 
 Aplica-se para todas as outras notações.
 
 \textbf{Simetria}
 
-\[f(n)=\Theta(g(n)) \Leftrightarrow g(n)=\Theta(f(n)).\]
+\[f(n)\in\Theta(g(n)) \Leftrightarrow g(n)\in\Theta(f(n)).\]
 
 \textbf{Outras}
 
