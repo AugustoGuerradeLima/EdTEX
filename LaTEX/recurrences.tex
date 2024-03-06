@@ -1,1 +1,13 @@
-\section{Recorrências}
+\section{Relações de recorrência}
+\
+
+No capítulo anterior, o pseudocódigo para o algoritmo fatorial recursivo foi apresentado. Através dele, é observável que a solução para $a_r = r! \ (r \in \mathbb{N})$, tendo como \textbf{condição inicial} $a_0 = 1$, pode ser computada através do que é chamado de \textbf{relação de recorrência}, nesse caso $ra_{r-1}$. Em uma \textbf{função definida recursivamente}, dado uma condição inicial e uma descrição dos estágios subsequentes em função dos anteriores é possível avaliar estágios da função para um dado $n$. Se $f$ for definida recursivamente, então $f(n)$ é única para qualquer inteiro positivo $n$.
+
+\textbf{Exemplo}
+
+A sequência de Fibonacci pode ser representada por uma relação de recorrência, $f_{n}+f_{n+1}=f_{n+2}$ e $f_0=f_1=1$. E a solução da recorrência, que não cabe ser demontrada nesse capítulo, é
+\[\frac{\Bigr(\frac{1+\sqrt(5)}{2}\Bigr)^n-\Bigr(\frac{1-\sqrt(5)}{2}\Bigr)^n}{\sqrt{5}}.\]
+
+{\raggedleft $\bigtriangleup$ \par}
+
+É importante salientar que não existe um método gera para a solução de recorrências arbitrárias, o que pode ser feito é dividir as relações de recorrências em algumas classes onde técnicas de soluções são conhecidas.
