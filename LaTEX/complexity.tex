@@ -266,7 +266,7 @@ A chamada \textbf{função de complexidade}, são os valores explícitos $f(n)=k
 
 \textbf{Exemplo 1}
 
-O algoritmo representado por pseudocódigo abaixo está somando elementos de um vetor $V$ utilizando um laço de iteração \textit{for}.
+O algoritmo representado por pseudocódigo abaixo está somando elementos de um vetor $V$ utilizando um laço de iteração \texttt{for}.
 \begin{lstlisting}[language=C, frame=single]
     int soma(V,n) 
     {
@@ -282,7 +282,7 @@ Primeiramente vamos estimar a complexidade do tempo de execução do algoritmo.
 
 (1) Atribuir o valor 0 para $s$ tem custo 1; 
 
-(2) No laço de iteração \textit{for} $i:=0$ tem custo 1, $i++$ é feito $n$ vezes e a comparação $i<n$, $n+1$ vezes, é possível então dizer que o \textit{for} tem custo $2n+2$, no entanto  o importante é a operação mais realizada, a de \textit{comparação} $i<n$, com custo $n+1$;
+(2) No laço de iteração \texttt{for} $i:=0$ tem custo 1, $i++$ é feito $n$ vezes e a comparação $i<n$, $n+1$ vezes, é possível então dizer que o \texttt{for} tem custo $2n+2$, no entanto  o importante é a operação mais realizada, a de \textit{comparação} $i<n$, com custo $n+1$;
 
 (3) A \textit{atribuição} $s:=s+V[i]$, dentro do laço de repetição é no total realizada $n$ vezes, portanto tem custo $n$.
 
@@ -506,7 +506,7 @@ A complexidade total é o produto da complexidade de cada chamada e da complexid
 
 (1) Cada função gera duas chamadas do mesmo tipo, as próximas duas fazem juntas quatro chamadas, as próximas quatro, oito e assim por diante;
 
-(2) quando as chamadas chegam em $funcao(1)$ foram feitas $2^{n-1}$ chamadas.
+(2) quando as chamadas chegam em \texttt{funcao(1)} foram feitas $2^{n-1}$ chamadas.
 
 A complexidade é $O(2^n)$.
  
@@ -521,7 +521,7 @@ Na análise de algoritmos existem classes de complexidade muito comuns. Do ponto
 
 Onde $k$ é uma constante maior que zero.
 
-A hierarquia de funções supracitadas indica que as funções mais a direita tem uma \textbf{ordem de crescimento} ou \textbf{ordem de magnitude} maior. Ou seja, quando $n\rightarrow\infty$, assumem valores mais significativos.
+A hierarquia de funções supracitadas indica que as funções mais a direita tem uma \textbf{ordem de crescimento} maior. Ou seja, quando $n\rightarrow\infty$, assumem valores mais significativos.
 
 \begin{figure}
   \centering
@@ -556,8 +556,8 @@ $O(n!)$ Uma complexidade \textbf{fatorial} geralmente indica que o algoritmo ite
 
 Um mesmo algoritmo pode desempenhar diferentes complexidades dependendo da entrada. O melhor caso de uma busca em um vetor por exemplo, ocorre quando o primeiro elemento é o elemento procurado, e o pior caso quando o elemento não se encontra no vetor.
 
-O algoritmo de ordenação \textit{quicksort} por exemplo, apresenta seu caso médio com complexidade $O(n\log(n))$ e seu pior caso com complexidade $O(n^2)$.
+O algoritmo de ordenação \texttt{quicksort} por exemplo, apresenta seu caso médio com complexidade $O(n\log(n))$ e seu pior caso com complexidade $O(n^2)$.
 
 O cálculo de complexidade do caso médio é bem mais complicado, Ele requer a probabilidade $P$ da ocorrência de uma entrada.
 
-Felizmente, na maioria da vezes, estamos interessados no pior caso de complexidade do algoritmo.
+Felizmente, na maioria da vezes, o pior caso do algoritmo é o de interesse.
