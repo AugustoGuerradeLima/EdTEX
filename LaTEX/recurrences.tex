@@ -3,11 +3,85 @@
 
 No capítulo anterior, o pseudocódigo para o algoritmo fatorial recursivo foi apresentado. Através dele, é observável que a solução para $a_r = r! \ (r \in \mathbb{N})$, tendo como \textbf{condição inicial} $a_0 = 1$, pode ser computada através do que é chamado de \textbf{relação de recorrência}, nesse caso $ra_{r-1}$. Em uma \textbf{função definida recursivamente}, dado uma condição inicial e uma descrição dos estágios subsequentes em função dos anteriores é possível avaliar estágios da função para um dado $n$. Se $f$ for definida recursivamente, então $f(n)$ é única para qualquer inteiro positivo $n$.
 
-\textbf{Exemplo}
+A \textbf{solução de uma relação de recorrência} é uma expressão que de o valor da função em termos de seus argumentos e que não dependa de sub expressões. Não existe um método geral para solucionar uma relação de recorrência arbitrária. Existem classes de relações de recorrência onde técnicas de solução são conhecidas.
 
-A sequência de Fibonacci pode ser representada por uma relação de recorrência, $f_{n}+f_{n+1}=f_{n+2}$ e $f_0=f_1=1$. E a solução da recorrência, que não cabe ser demontrada nesse capítulo, é
-\[\frac{\Bigr(\frac{1+\sqrt(5)}{2}\Bigr)^n-\Bigr(\frac{1-\sqrt(5)}{2}\Bigr)^n}{\sqrt{5}}.\]
+Por vezes, encontrar a solução da recorrência é difícil e é possível contentar-se apenas com uma boa estimativa assintótica da cota superior.
+
+\textbf{Exemplo 1}
+
+Uma simples relação de recorrência, $a_n = a_{n-1} + 1$ e $a_0=0$ pode ter uma solução encontrada por substituição de alguns termos.
+\[a_n = a_{n-1} + 1 \Rightarrow a_{n-1} = a_{n-2} + 1 \Rightarrow a_n = a_{n-2} + 2\]
+\[a_n = a_{n-k} + k\]
+
+Assumindo $k=n$ temos que $a_n=a_0 + n$ pois $n-k = 0$, como $a_0=0$, então $a_n=n$ é a solução da recorrência. Por último, a notação $T(n)=T(n-1)+1$ e $T(0)=0$ com solução $T(n) = n$ é frequentemente utilizada, é claro que $T(n) \in O(n)$.
 
 {\raggedleft $\bigtriangleup$ \par}
 
-É importante salientar que não existe um método geral para a solução de recorrências arbitrárias, o que pode ser feito é dividir as relações de recorrências em classes onde técnicas de soluções são conhecidas.
+\textbf{Exemplo 2}
+
+Para encontrar a solução de $a_n = a_{n-1} + n + 1$ com $a_0 = 0$ também é possível reescrever $a_n$
+\[a_n = a_{n-1} + n + 1 = (a_{n-2} + (n-1) + 1) + n + 1 = a_{n-2} + (n-1) + n + 2 = a_{n-3} + (n-2) + (n-1) + n + 3\]
+
+\[a_n = a_{n-k} + (n-k+1) + ... + (n-1) + n + k\]
+
+Supondo $k=n$
+
+\[a_n = a_0 + 1 + ... + (n-1) + 2n = \frac{n(n+1)}{2} + n \in O(n^2).\]
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\textbf{Exemplo 3}
+
+Resolva a recorrência $a_n = a_{n/2} + n$ com $a_0 = 1$, note que faz sentido falar de $n$ apenas no conjunto de potências de $2$, logo $n=2^k$. Usando a notação $T(n)=T(2^k)$.
+
+\[T(n) = T \Bigr(\frac{n}{2}\Bigr) + n = \Bigr[T\Bigr(\frac{n}{2^2}\Bigr) + \frac{n}{2}\Bigr] + n\]
+\[T(n) = T\Bigr(\frac{n}{2^k}\Bigr) + \frac{n}{2^k} + ... + \frac{n}{2} + n\]
+
+Fazendo $k=\log_2(n)$
+
+\[T(n) = T(1) + n\sum_{i=1}^k \frac{1}{i} = 1 + 2n \in O(n).\]
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\subsection{Teorema mestre}
+\
+
+Sejam $a\geq 1$ e $b>1$ constantes, $f(n)$ uma função e $T(n)$ definida em $\mathbb{N}_0$ pela recorrência $T(n) = aT\Bigr(\frac{n}{b}\Bigr) + f(n)$, $T(n)$ tem os seguintes limites assintóticos
+
+\[f(n) = O\Bigr(\frac{n^{\log_ba}}{n^\epsilon}\Bigr), \ \epsilon>0 \Rightarrow T(n) = \Theta(n^{\log_ba}).\]
+
+\[f(n) = \Theta(n^{\log_ba}) \Rightarrow T(n) = \Theta(n^{\log_ba} \log n).\]
+
+\[f(n) = \Omega(n^{\log_ba}n^\epsilon), \ \epsilon>0, \ \exists c; \ af\Bigr(\frac{n}{b}\Bigr)\leq cf(n) \Rightarrow T(n) = \Theta(f(n)).\]
+
+
+O Teorema mestre dá a solução assintótica para recorrências da forma $aT\Bigr(\frac{n}{b}\Bigr) + f(n)$. Muitas vezes saber a ordem de crescimento da recorrência já é suficiente e uma solução de fórmula fechada não é necessária.
+
+De modo intuitivo, o teorema mestre que ao comparar $f(n)$ e $n^{\log_ba}$ o caso (1) ocorre se $f(n)$ for polinomialmente menor que $n^{\log_ba}$, no caso (2) se forem iguais e no caso (3) se $f(n)$ for polinomialmente maior que $n^{\log_ba}$. Como essa diferença por um fator polinomial $n^\epsilon$ é obrigatória existem classes de funções $f(n)$ que são menores que $n^{\log_ba}$ mas não polinomialmente menores, dessa forma, o primeiro caso do teorema mestre não se aplicaria, isso é análogo para o terceiro caso.
+
+
+\textbf{Exemplo 1}
+
+$T(n)=9T\Bigr(\frac{n}{3}\Bigr) + n$. Primeiramente, identificando os termos se obtém, $a=9$, $b=3$ e $f(n)=n$.
+
+Em segundo lugar, avaliando $n^{\log_ba}=n^{\log_3 9} = n^2$. Tomando $\epsilon = 1$, $f(n) = O(n^{2-1})$ e $f(n) = n \prec n^2$, o primeiro caso é satisfeito e $T(n) = \Theta(n^2).$
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\textbf{Exemplo 2}
+
+$T(n) = 2T\Bigr(\frac{n}{4}\Bigr) + \sqrt{n}$. Para essa recorrência, $a = 2$, $b = 4$ e $f(n) = \sqrt{n}$, ao avaliar $n^{\log_ba}=n^{\log_4 2} = \sqrt{n}$. Como $f(n) = \Theta(\sqrt{n})$ o segundo caso é satisfeito e $T(n) = \Theta(\sqrt{n}\log n)$.
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\textbf{Exemplo 3 (Teorema não se aplica)}
+
+$T(n) = 6T\Bigr(\frac{n}{6}\Bigr) + {n \log n}$. Neste caso $n^{\log_ba} = n \prec n \log n$, entretanto, o terceiro caso não se aplica, observando que $f(n)$ não é polinomialmente maior que $n$, é apenas maior por um fator $\log n$.
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\textbf{Exemplo 4}
+
+$T(n) = 3T\Bigr(\frac{n}{4}\Bigr) + {n \log n}$. Identificando os termos na recorrência, $n^{\log_4 3} = n^{0,793}$. Para uma constante $\epsilon \approx 0,2$, $f(n) = \Omega(n^{0,793}n^{0,2})$. Verificando a condição de regularidade $af\Bigr(\frac{n}{b}\Bigr) = 3\Bigr(\frac{n}{4}\Bigr)\log\Bigr(\frac{3}{4}\Bigr) \leq \Bigr(\frac{3}{4}\Bigr) n \log n \leq \frac{3}{4}f(n)$ logo $c=\frac{3}{4}$. Assim, o terceiro caso do teorema mestre pode ser aplicado e $T(n) = \Theta (n \log n)$.
+
+{\raggedleft $\bigtriangleup$ \par}

@@ -26,6 +26,15 @@ A aritmética de endereços é importante para a alocação dinâmica. Na memór
     //V[i]=*(V+i)
 \end{lstlisting}
 
+\newpage
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\linewidth]{img/aritmeticaenderecos.png}
+    \caption{Representação da aritmética de endereços}
+    \label{aritimeticaenderecos}
+\end{figure}
+
 Para o caso de matrizes $M[i][j]=*(*(M+i)+j)$.
 
 \subsection*{Alocação dinâmica}
@@ -70,7 +79,7 @@ V = malloc (n*sizeof(int));
 
 for(int i = 0; i < n; i++)
 {
-    //...
+    //procedimentos
 }
 
 //desalocando vetor dinamico
