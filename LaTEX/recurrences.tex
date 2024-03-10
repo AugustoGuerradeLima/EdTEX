@@ -7,6 +7,8 @@ A \textbf{solução de uma relação de recorrência} é uma expressão que de o
 
 Por vezes, encontrar a solução da recorrência é difícil e é possível contentar-se apenas com uma boa estimativa assintótica da cota superior.
 
+\subsection{Método da substituição}
+
 \textbf{Exemplo 1}
 
 Uma simples relação de recorrência, $a_n = a_{n-1} + 1$ e $a_0=0$ pode ter uma solução encontrada por substituição de alguns termos.
@@ -59,7 +61,6 @@ O Teorema mestre dá a solução assintótica para recorrências da forma $aT\Bi
 
 De modo intuitivo, o teorema mestre que ao comparar $f(n)$ e $n^{\log_ba}$ o caso (1) ocorre se $f(n)$ for polinomialmente menor que $n^{\log_ba}$, no caso (2) se forem iguais e no caso (3) se $f(n)$ for polinomialmente maior que $n^{\log_ba}$. Como essa diferença por um fator polinomial $n^\epsilon$ é obrigatória existem classes de funções $f(n)$ que são menores que $n^{\log_ba}$ mas não polinomialmente menores, dessa forma, o primeiro caso do teorema mestre não se aplicaria, isso é análogo para o terceiro caso.
 
-
 \textbf{Exemplo 1}
 
 $T(n)=9T\Bigr(\frac{n}{3}\Bigr) + n$. Primeiramente, identificando os termos se obtém, $a=9$, $b=3$ e $f(n)=n$.
@@ -85,3 +86,99 @@ $T(n) = 6T\Bigr(\frac{n}{6}\Bigr) + {n \log n}$. Neste caso $n^{\log_ba} = n \pr
 $T(n) = 3T\Bigr(\frac{n}{4}\Bigr) + {n \log n}$. Identificando os termos na recorrência, $n^{\log_4 3} = n^{0,793}$. Para uma constante $\epsilon \approx 0,2$, $f(n) = \Omega(n^{0,793}n^{0,2})$. Verificando a condição de regularidade $af\Bigr(\frac{n}{b}\Bigr) = 3\Bigr(\frac{n}{4}\Bigr)\log\Bigr(\frac{3}{4}\Bigr) \leq \Bigr(\frac{3}{4}\Bigr) n \log n \leq \frac{3}{4}f(n)$ logo $c=\frac{3}{4}$. Assim, o terceiro caso do teorema mestre pode ser aplicado e $T(n) = \Theta (n \log n)$.
 
 {\raggedleft $\bigtriangleup$ \par}
+
+\subsection{Relações de recorrência homogêneas e não homogêneas}
+\
+
+O método da substituição pode ser difícil para algumas relações de recorrência e o método mestre é restrito para formatos de relações. Ainda existem classes que podem ser solucionadas de outras formas, similares a encontrar soluções para equações diferenciais simples.
+
+Através dos métodos a seguir é possível solucionar recorrências como as somas de quadrados ou até mesmo a famosa sequência de Fibonacci.
+
+\subsubsection{Princípio da superposição}
+\
+
+Se funções $g_i(n) (i = 1, ..., k)$ forem soluções para uma relação de recorrência linear com coeficientes constantes de ordem r, então a combinação linear das $k$ soluções, $A_1g_1(n) + ... + A_kg_k(n)$, é solução da relação de recorrência, $A_i \in \mathbb{R}$.
+
+\subsubsection{Relações de recorrência homogêneas}
+\
+
+Uma \textbf{relação de recorrência linear com coeficientes constantes de ordem r} é definida como uma relação de recorrência da forma $a_n = k_1a_{n-1}+...+k_ra_{n-r} + f(n)$ sendo $k_i \ (i = 1, ... , r)$ constantes e $f(n) = 0$. Se $g(n)$ é uma função onde $a_n=g(n)$ então $g(n)$ é chamada de \textbf{solução} da relação de recorrência.
+
+Digamos que $a_r = x^r$ é solução da relação, então $x^n = k_1x^{n-1}+...+k_rx^{n-r}$, e ignorando a solução trivial $x=0$, obtém-se a equação polinomial de grau $r$, $x^n - k_1x^{n-1}-...-k_rx^{n-r} = 0$, chamada de \textbf{equação característica} da relação de recorrência.
+
+Se as raízes da equação características forem todas \textbf{reais e distintas}, a solução homogênea será da forma
+\[a_n = A_1(x_1)^n + ... + A_n(x_n)^n.\]
+
+\textbf{Exemplo 1}
+
+$T(n) = 9T(n-2); \ T(0) = 6,  \ T(1) = 12$. Obtendo a equação característica, $x^2 - 9 = 0$, as raízes são avaliadas em $x_i = {-3,3}$. A solução da relação de recorrência é da forma $T(n) = A_1(-3)^n + A_2(3)^n$. Dadas as condições iniciais, $A_1 + A_2 = 6$ e $-3A_1 + 3A_2 = 12$, assim a solução é 
+\[T(n) = (-3)^n + 5(3)^n.\]
+
+\textbf{Exemplo 2 (Termo geral da sequência de Fibonacci)}
+
+A sequência de Fibonacci com relação de recorrência $a_n = a_{n-1} + a_{n-2}$ com $a_0 = a_1 = 1$, pode ter uma solução obtida através do método apresentado.
+
+As raízes da equação característica $x^2 - x - 1 = 0$ são $x_1 = \frac{1+\sqrt{5}}{2}$ e $x_2 = \frac{1 - \sqrt{5}}{2}$.
+
+Usando a forma $a_n = A_1(x_1)^n + A_2(x_2)^n$, e as condições iniciais, avalia-se $A_1 = \frac{5 + \sqrt{5}}{10}$ e $A_2 = \frac{5 - \sqrt{5}}{10}$.
+
+Dessa forma, multiplicando os termos, a solução para a relação de recorrência de Fibonacci é 
+
+\[\frac{(\frac{1+\sqrt{5}}{2})^n-(\frac{1 - \sqrt{5}}{2})^n}{\sqrt{5}}.\]
+
+{\raggedleft $\bigtriangleup$ \par}
+
+Caso as raízes apresentarem \textbf{multiplicidade}, sendo reais, ou seja, \textbf{reais e repetidas}, o formato de solução para raízes reais e distintas não funcionará mais pois ele violaria o princípio da superposição da combinação linear.
+
+Se $x$ for uma raiz de multiplicidade então a solução particular será da forma
+
+\[u_p = (x)^n(A_1 + ... + A_{k}x^{k-1}).\]
+
+\textbf{Exemplo 3}
+
+Se $x_1 = 2$ tiver multiplicidade $3$ e $x_2 = 6$ multiplicidade $2$ e ambas forem raízes de uma mesma equação característica então o formato da solução será
+
+\[a_n = 2^n(A_1 + A_2n + A_3n^2) + 6^n(B_1n + B_2n^2).\]
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\subsubsection{Relações de recorrência não homogêneas}
+
+Quando uma relação de recorrência é do formato $a_n = h_n + f(n)$ com $f(n) \neq 0$, dizemos que $h_n$ é a \textbf{parte homogênea} da relação de recorrência não homogênea. A solução geral será a soma da solução da parte homogênea com a solução não homogênea.
+
+Existem dois casos especiais onde técnicas de solução são conhecidas. Primeiramente, o caso onde $f(n) = k(q)^n$, onde $q \neq 1$ é um número racional e $k$ uma constante conhecida. A escolha para uma solução particular é $u_n = A(q)^n$, a menos que a $q$ seja uma raiz da equação característica, nesse caso a escolha seria $u_n = A(n)^r(q)^n$, onde $r$ é a multiplicidade da raiz.
+
+O segundo caso é quando $f(n) = k(n)^r$, se a equação característica não possuir raiz $x = 1$, a solução é do formato $A_1 + ... + A_k(n)^{k-1}$. Se $1$ for uma raiz de multiplicidade $r$ então a escolha será $A_1n^t + ... + A_kn^{t+(k-1)}$.
+
+\textbf{Exemplo}
+
+Avaliar a soma dos quadrados dos $n$ primeiros inteiros positivos.
+
+A relação de recorrência é dada por $a_n = a_{n-1} + n^2$ com $a_0 = 0$. A solução homogênea é calculada como $x = 1$, de multiplicidade $1$, então a solução será da última forma apresentada.
+
+A escolha para a solução particular não homogênea é $A_1n + A_2n^2 + A_3n^3$. Como $a_0 = 0$ a solução é da forma.
+
+\[a_n = A_1n + A_2n^2 + A_3n^3,\]
+\[a_n  = A_1(n-1) + A_2(n-1)^2 + A_3(n-1)^3 + n^2.\]
+
+Colando os termos $n$ e $n^2$ em evidencia, um sistema pode ser formado para calcular $A_1 = \frac{1}{6}$, $A_2 = \frac{1}{2}$ e $A_3 = \frac{1}{3}$.
+
+Dessa forma a solução é $a_n = \frac{n}{6} + \frac{n^2}{2} + \frac{n^3}{3}$, chegando no resultado
+
+\[\sum_{i=0}^{n} i^2 = \frac{n(n+1)(2n+1)}{6}.\]
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\subsection{Algoritmos recursivos}
+\
+
+Uma relação de recorrência é uma fórmula recursiva. Um procedimento recursivo na ciência da computação, chama a si próprio para resolver um problema similar porém menor, se a instância é pequena, ele a resolve diretamente como puder. Um exemplo de algoritmo recursivo é o de computar a soma dos números de Fibonacci até uma indexação $n$.
+
+\begin{lstlisting}[language=C, frame=single]
+    int fibonacci(n)
+    {
+        if(n <= 1) return n
+
+        else return fibonacci(n-1) + fibonacci(n-2)
+    }
+\end{lstlisting}
