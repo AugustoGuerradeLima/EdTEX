@@ -27,6 +27,8 @@ Tempo de execução, armazenamento e robustez são algumas características que 
 
 A \textbf{complexidade do tempo de execução} de um algoritmo é avaliada para estimar sua eficiência antes da implementação. A eficiência é representada por uma função que recebe o tamanho da entrada do algoritmo como parâmetro.
 
+Ao longo das sessões será utilizado o modelo \textit{random-access machine} (RAM), assim consideramos que um único processador realize as tarefas de forma sequencial, com operações básicas como as aritméticas ou comparações com custo constante e com os dados armazenados na memória.
+
 \subsection{Crescimento assintótico de funções}
 \
 
@@ -133,7 +135,7 @@ Além disso $g(n)\in\Theta(f(n)) \Leftrightarrow f(n)\in\Theta(g(n))$.
 \begin{figure}
   \centering
   \includegraphics[width=0.4\linewidth]{img/Theta.png}
-    \caption{$g(n)\in\Theta(f(n))$.}
+    \caption{$g(n)\in\Theta(f(n))$. Entre as funções das extremidades existe uma família de funções pertencentes a $\Theta(f(n))$.}
     \label{Theta}
 \end{figure}
 
@@ -217,6 +219,11 @@ Aplica-se para todas as outras notações.
 \textbf{Outras}
 
 \[O(n+m)=O(n)=O(m).\]
+
+\[O(f(n)) + O(g(n)) = O(max(f(n),g(n))).\]
+
+\[g(n)O(f(n)) = O(f(n))O(g(n)) = O(f(n)g(n)).\]
+
 \[O(kn)=kO(n)=O(n).\]
 
 Quando a notação assintótica é utilizada sozinha no lado direito de uma equação como em $n=O(n)$, o sinal de $=$ não representa igualdade e sim que a função $f(n)=n\in O(n)$, sendo unidirecional, assim nunca se deve escrever coisas do tipo $O(n)=n$.
@@ -556,8 +563,30 @@ $O(n!)$ Uma complexidade \textbf{fatorial} geralmente indica que o algoritmo ite
 
 Um mesmo algoritmo pode desempenhar diferentes complexidades dependendo da entrada. O melhor caso de uma busca em um vetor por exemplo, ocorre quando o primeiro elemento é o elemento procurado, e o pior caso quando o elemento não se encontra no vetor.
 
-O algoritmo de ordenação \texttt{quicksort} por exemplo, apresenta seu caso médio com complexidade $O(n\log(n))$ e seu pior caso com complexidade $O(n^2)$.
+O algoritmo de ordenação \texttt{quick sort} por exemplo, apresenta seu caso médio com complexidade $O(n\log(n))$ e seu pior caso com complexidade $O(n^2)$.
 
-O cálculo de complexidade do caso médio é bem mais complicado, Ele requer a probabilidade $P$ da ocorrência de uma entrada.
+O cálculo de complexidade do caso médio é bem mais complicado, Ele requer a probabilidade $P$ da ocorrência de uma entrada. Na análise probabilista é necessário conhecer alguma informação sobre a distribuição das entradas.
 
 Felizmente, na maioria da vezes, o pior caso do algoritmo é o de interesse.
+
+\textbf{Exemplo (Busca sequencial)}
+
+Considere um algoritmo que busca um valor $c$ em um vetor $V$ de tamanho $n$. Esse é um dos mais simples exemplos para exemplificar os três casos de complexidade. Considere que o vetor não está ordenado e que analisamos as posições em ordem crescente.
+
+(1) No melhor dos casos, o elemento procurado $c$ está na primeira posição, logo foi necessário apenas uma comparação e um custo constante; A função complexidade $T(n)$ será então $T(n) = 1 \in O(1)$.
+
+(2) No caso médio algumas restrições devem ser tomadas; Primeiramente, considere que a chave $c$ procurada está com certeza no vetor, ou seja, uma posição valida sempre será retornada pelo algoritmo; Em segundo lugar, a probabilidade $P$ de uma das posições alocar a chave $c$ é uma situação equiprovável, portanto $\frac{1}{n}$.
+
+Se a chave estiver em uma posição $r$, serão feitas $r$ comparações até encontra-la. Portanto, seja $k$ o numero de comparações feitas até a posição $r$, tem-se $r=k$. E seja a probabilidade da posição $r$, $P_k = \frac{1}{n} \ \forall k \in \mathbb{N}$, então a função complexidade é 
+
+\[T(n) = P_1 + 2P_2 + ... + nP_n = \frac{1}{n}(1+...+n) = \frac{1}{n}\sum_{k=1}^n k\]
+\[T(n)=\frac{n(n+1)}{2n} = \frac{n+1}{2} \in O(n).\]
+
+(3) No pior caso, todas as comparações são feitas, isso acontece se o elemento não estiver no vetor ou se ele assumir a ultima posição, sendo feita $n$ comparações $T(n)=n$ e a função complexidade e $T(n) \in O(n)$ é a ordem de complexidade.
+
+{\raggedleft $\bigtriangleup$ \par}
+
+\subsection{Classes de algoritmo e o algoritmo ótimo}
+\
+
+Até então, foram avaliados algoritmos em particular. No entanto é possível avaliar uma \textbf{classe de algoritmos} para solucionar um problema algorítmico em específico como encontrar um determinado valor ou ordenar um arranjo; Essa análise e bem mais rara, em geral, o que é feito é determinar um limite inferior de complexidade para o problema, ou seja, encontrar a menor complexidade possível para resolver o problema dado. Por muitas vezes, avaliar esse limite é difícil e requer métodos como autômatos (oráculos) e heurísticas. O algoritmo que apresenta complexidade igual a da cota inferior é chamado \textbf{algoritmo ótimo}.

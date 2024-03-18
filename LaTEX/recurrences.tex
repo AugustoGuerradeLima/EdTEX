@@ -134,7 +134,9 @@ A chamada \texttt{fibonacci(n-1)} faz mais chamadas subsequentes do que a chamad
 
 Fazendo em $T(0)=T(1)=1$, o termo $T(n-r)=T(0)$ leva a $n=r$. $T(n) = 2^n + (2^n-1)k \in O(2^n)$. Logo o limite assintótico da cota superior é exponencial.
 
-Um fato interessante é que a relação de recorrência encontrada no momento do cálculo de complexidade $T(n)=T(n-1)+T(n-2)+O(1)$ se assemelha bastante a relação de recorrência da própria função de Fibonacci $a_n=a_{n-1}+a_{n-2}$. Em uma próxima sub sessão será apresentado um método capaz de encontrar uma solução $g(n)$ para o termo geral da série de Fibonacci que tem o termo mais significativo $\Bigr(\frac{1+\sqrt{5}}{2}\Bigr)^n < 2^n$. Sabendo que se $a<b$ então $a^n \in O(b^n)$ então é possível dizer $a_n \in O(1,62^n) \subset O(2^n)$. Embora a relação de recorrência encontrada na resolução da complexidade seja similar a usada para encontrar o termo geral de Fibonacci, elas não são a mesma recorrência.
+Entretanto, algo importante deve ser dito, aproximar as duas chamadas do algoritmo recursivo nos entrega, no caso anterior, a cota superior da complexidade de tempo de execução do algoritmo. A complexidade real do algoritmo recursivo de Fibonacci é na verdade $O(\phi^n)\approx O(1,62^n)$.
+
+Um fato interessante é que a relação de recorrência encontrada no momento do cálculo de complexidade $T(n)=T(n-1)+T(n-2)+O(1)$ se assemelha bastante a relação de recorrência da própria função de Fibonacci $a_n=a_{n-1}+a_{n-2}$. Em uma próxima sub sessão será apresentado um método capaz de encontrar uma solução $g(n)$ para o termo geral da série de Fibonacci que tem o termo mais significativo $\Bigr(\frac{1+\sqrt{5}}{2}\Bigr)^n < 2^n$. Sabendo que se $a<b$ então $a^n \in O(b^n)$ então é possível dizer $a_n \in O(1,62^n) \subset O(2^n)$.
 
 \subsubsection{Método da árvore de recursão para resolução de relações de recorrências}
 \
@@ -159,7 +161,7 @@ A \textbf{divisão e conquista} é uma estratégia para desenvolver algoritmos, 
 
 Primeiramente, o problema geral é \textbf{dividido} em problemas não sobrepostos de tamanhos aproximadamente iguais, esses subproblemas são instâncias menores do problemas geral. Em segundo lugar, ocorre a etapa de \textbf{conquista}, que consiste em solucionar recursivamente os subproblemas. Por último, os subproblemas são \textbf{combinados} solucionando o problema geral.
 
-Dentre os algoritmos que seguem essa estratégia estão o \texttt{algoritmo numérico da bisseção}, os algoritmos de ordenação \texttt{quicksort} e \texttt{mergesort} onde a estratégia é bastante explicita e o algoritmo para multiplicação de matrizes de \texttt{Strassen} que reduz a complexidade do algoritmo ingenuo.
+Dentre os algoritmos que seguem essa estratégia estão o \texttt{algoritmo numérico da bisseção}, os algoritmos de ordenação \texttt{quick sort} e \texttt{merge sort} onde a estratégia é bastante explicita e o algoritmo para multiplicação de matrizes de \texttt{Strassen} que reduz a complexidade do algoritmo ingenuo.
 
 \textbf{Exemplo (Busca binária)}
 
