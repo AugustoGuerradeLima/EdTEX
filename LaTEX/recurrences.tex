@@ -5,12 +5,12 @@ Na sessão anterior, o pseudocódigo para o algoritmo fatorial recursivo foi apr
 
 A \textbf{solução de uma relação de recorrência} é uma expressão que de o valor da função em termos de seus argumentos e que não dependa de sub expressões. Não existe um método geral para solucionar uma relação de recorrência arbitrária. Existem classes de relações de recorrência onde técnicas de solução são conhecidas.
 
-Por vezes, encontrar a solução da recorrência é difícil e é possível contentar-se apenas com uma boa estimativa assintótica da cota superior.
+Por vezes, encontrar a solução da recorrência é difícil e é possível contentar-se apenas com uma boa estimativa assintótica.
 
-\subsection{Método da substituição}
+\subsection{Método da expansão de termos}
 \
 
-O método da substituição é capaz de resolver recorrências simples, basta escrever os termos em função de seus antecessores e assim dar um palpite sobre a forma geral solucionando a recursão.
+O método da expansão de termos ou substituição é capaz de resolver recorrências simples, basta escrever os termos em função de seus antecessores e assim dar um palpite sobre a forma geral, analisar o caso base e então encontrar uma solução para a relação de recorrência.
 
 \textbf{Exemplo 1}
 
@@ -20,38 +20,45 @@ Uma simples relação de recorrência, $a_n = a_{n-1} + 1$ e $a_0=0$ pode ter um
 
 Assumindo $k=n$ temos que $a_n=a_0 + n$ pois $n-k = 0$, como $a_0=0$, então $a_n=n$ é a solução da recorrência. Por último, a notação $T(n)=T(n-1)+1$ e $T(0)=0$ com solução $T(n) = n$ é frequentemente utilizada, é claro que $T(n) \in O(n)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 2}
 
 Para encontrar a solução de $a_n = a_{n-1} + n + 1$ com $a_0 = 0$ também é possível reescrever $a_n$
-\[a_n = a_{n-1} + n + 1 = (a_{n-2} + (n-1) + 1) + n + 1 = a_{n-2} + (n-1) + n + 2 = a_{n-3} + (n-2) + (n-1) + n + 3\]
+\[a_n = a_{n-1} + n + 1 = [a_{n-2} + (n-1) + 1] + n + 1 = a_{n-2} + (n-1) + n + 2 = a_{n-3} + (n-2) + (n-1) + n + 3\]
 
 \[a_n = a_{n-k} + (n-k+1) + ... + (n-1) + n + k\]
 
-Supondo $k=n$
+Para atingir a condição inicial tome $k=n$
 
 \[a_n = a_0 + 1 + ... + (n-1) + 2n = \frac{n(n+1)}{2} + n \in O(n^2).\]
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 3}
 
-Resolva a recorrência $a_n = a_{n/2} + n$ com $a_0 = 1$, note que faz sentido falar de $n$ apenas no conjunto de potências de $2$, logo $n=2^k$. Usando a notação $T(n)=T(2^k)$.
+Utilizando a outra notação apresentada, tome a relação de recorrência $T(n) = 2T\Bigr(\frac{n}{2}\Bigr) + n$ com condição inicial $T(1)=k_0$, onde $k_0$ é uma constante real positiva.
 
-\[T(n) = T \Bigr(\frac{n}{2}\Bigr) + n = \Bigr[T\Bigr(\frac{n}{2^2}\Bigr) + \frac{n}{2}\Bigr] + n\]
-\[T(n) = T\Bigr(\frac{n}{2^k}\Bigr) + \frac{n}{2^k} + ... + \frac{n}{2} + n\]
+Expandindo os termos
 
-Fazendo $k=\log_2(n)$
+\[T(n) = 2T\Bigr(\frac{n}{2}\Bigr) + n = 2^2T\Bigr(\frac{n}{2^2}\Bigr) + n + n = 2^3T\Bigr(\frac{n}{2^3}\Bigr)+ n + n + n.\]
 
-\[T(n) = T(1) + n\sum_{i=1}^k \frac{1}{i} = 1 + 2n \in O(n).\]
+A partir da expansão acima, o palpite $T(n)=2^kT\Bigr(\frac{n}{2^k}\Bigr) + kn$ é apropriado. 
 
-{\raggedleft $\bigtriangleup$ \par}
+O caso da condição inicial deve ser avaliado com atenção. A condição $T(1)=k_0$ não é atingida quando $k=n-1$ e sim quando $T\Bigr(\frac{n}{2^k}\Bigr) = T(1)$
 
-\subsection{Teorema mestre para funções decrescentes}
+\[T\Bigr(\frac{n}{2^k}\Bigr)=T(1)\Rightarrow\frac{n}{2^k}=1\Rightarrow k = \log_2n.\]
+
+Substituindo $k=\log_2n$ no palpite, é obtido
+
+\[T(n)=2^{\log_2n}T\Bigr(\frac{n}{2^{\log_2n}}\Bigr)+n\log_2n=nT(1)+n\log_2n=k_0n+n\log_2n\in O(n\log n).\]
+
+{\raggedleft $\bullet$ \par}
+
+\subsection{Generalização para relações de recorrência comuns}
 \
 
-A seguir são apresentadas as soluções (sugestão de exercício) assintóticas para algumas relações de recorrência. A partir da observação, podemos conjecturar uma forma geral de solução assintótica a ser seguida.
+A seguir são apresentadas as soluções (sugestão de exercício) assintóticas para algumas relações de recorrência. A partir da observação, é possível conjecturar a respeito de uma forma generalizada de solução assintótica para algumas relações de recorrência comuns.
 \[T(n)=T(n-1)+1 \in O(n);\]
 \[T(n)=T(n-1)+n \in O(n^2);\]
 \[T(n)=T(n-1)+ \log n \in O(n \log n);\]
@@ -59,13 +66,13 @@ A seguir são apresentadas as soluções (sugestão de exercício) assintóticas
 \[T(n)=3T(n-1)+1 \in O(3^n);\]
 \[T(n)=2T(n-1)+n \in O(n2^n).\]
 
-Uma conjectura apropriada, que pode ser demonstrada como teorema mestre para funções decrescentes é que para uma relação de recorrência da forma $T(n)=aT(n-b)+f(n)$, com $a>0$, $b>0$ e sendo $f(n)=O(n^k)$ onde $k\geq 0$, existem três soluções assintóticas que podem ser sumarizadas
+Uma conjectura apropriada, que pode ser demonstrada como teorema é que para uma relação de recorrência da forma $T(n)=aT(n-b)+n^k$, com $a,b>0$ e $k\geq 0$, existem três soluções assintóticas que podem ser sumarizadas:
 
-(1) Se $a<1$ então $T(n) \in O(n^k)$ ou ainda $T(n) \in O(f(n))$;
+(1) Se $a<1$ então $T(n) \in O(n^k)$;
 
-(2) Se $a=1$ então $T(n) \in O(n^k+1)$ ou ainda $O(nf(n))$;
+(2) Se $a=1$ então $T(n) \in O(n^{k+1})$;
 
-(3) Se $a>1$ então $T(n) \in O(n^ka^{\frac{n}{b}})$ ou ainda $O(f(n)a^{\frac{n}{b}})$.
+(3) Se $a>1$ então $T(n) \in O(n^ka^{\frac{n}{b}}).$ 
 
 \subsection{Teorema mestre}
 \
@@ -89,25 +96,25 @@ $T(n)=9T\Bigr(\frac{n}{3}\Bigr) + n$. Primeiramente, identificando os termos se 
 
 Em segundo lugar, avaliando $n^{\log_ba}=n^{\log_3 9} = n^2$. Tomando $\epsilon = 1$, $f(n) = O(n^{2-1})$ e $f(n) = n \prec n^2$, o primeiro caso é satisfeito e $T(n) \in \Theta(n^2).$
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet $ \par}
 
 \textbf{Exemplo 2}
 
 $T(n) = 2T\Bigr(\frac{n}{4}\Bigr) + \sqrt{n}$. Para essa recorrência, $a = 2$, $b = 4$ e $f(n) = \sqrt{n}$, ao avaliar $n^{\log_ba}=n^{\log_4 2} = \sqrt{n}$. Como $f(n) = \Theta(\sqrt{n})$ o segundo caso é satisfeito e $T(n) \in \Theta(\sqrt{n}\log n)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 3 (Teorema não se aplica)}
 
 $T(n) = 6T\Bigr(\frac{n}{6}\Bigr) + {n \log n}$. Neste caso $n^{\log_ba} = n \prec n \log n$, entretanto, o terceiro caso não se aplica, observando que $f(n)$ não é polinomialmente maior que $n$, é apenas maior por um fator $\log n$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 4}
 
 $T(n) = 3T\Bigr(\frac{n}{4}\Bigr) + {n \log n}$. Identificando os termos na recorrência, $n^{\log_4 3} = n^{0,793}$. Para uma constante $\epsilon \approx 0,2$, $f(n) = \Omega(n^{0,793}n^{0,2})$. Verificando a condição de regularidade $af\Bigr(\frac{n}{b}\Bigr) = 3\Bigr(\frac{n}{4}\Bigr)\log\Bigr(\frac{3}{4}\Bigr) \leq \Bigr(\frac{3}{4}\Bigr) n \log n \leq \frac{3}{4}f(n)$ logo $c=\frac{3}{4}$. Assim, o terceiro caso do teorema mestre pode ser aplicado e $T(n) \in \Theta (n \log n)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsection{Algoritmos recursivos}
 \
@@ -242,7 +249,7 @@ Dessa forma, multiplicando os termos, a solução para a relação de recorrênc
 
 \[\frac{\Bigr(\frac{1+\sqrt{5}}{2}\Bigr)^n-\Bigr(\frac{1 - \sqrt{5}}{2}\Bigr)^n}{\sqrt{5}}.\]
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 Caso as raízes apresentarem \textbf{multiplicidade}, sendo reais, ou seja, \textbf{reais e repetidas}, o formato de solução para raízes reais e distintas não funcionará mais pois ele violaria o princípio da superposição da combinação linear.
 
@@ -256,7 +263,7 @@ Se $x_1 = 2$ tiver multiplicidade $3$ e $x_2 = 6$ multiplicidade $2$ e ambas for
 
 \[a_n = 2^n(A_1 + A_2n + A_3n^2) + 6^n(B_1n + B_2n^2).\]
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Relações de recorrência não homogêneas}
 
@@ -283,4 +290,4 @@ Dessa forma a solução é $a_n = \frac{n}{6} + \frac{n^2}{2} + \frac{n^3}{3}$, 
 
 \[\sum_{i=1}^{n} i^2 = \frac{n(n+1)(2n+1)}{6}.\]
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}

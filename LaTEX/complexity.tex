@@ -1,17 +1,4 @@
-\section*{Prefácio}
 
-Este texto tem como propósito primordial (1) atender à necessidade de um material que apresente os tópicos abordados na disciplina de \textit{Estrutura de Dados} de forma organizada e (2) oferecer suporte a estudantes que não tenham cursado a disciplina de \textit{Matemática Discreta}, promovendo um encontro mais suave com os tópicos em matemática do conteúdo.
-
-O texto está sendo aprimorado, e ficarei grato por qualquer sugestão ou comentário que você (leitor) possa enviar para o e-mail: \href{mailto:augustoguerradelima@proton.me}{augustoguerradelima@proton.me}.
-\vspace{0.5cm}
-
-{\raggedleft
-Belo Horizonte, fevereiro de 2024
-
-Augusto Guerra de Lima
-\par}
-
-\newpage
 \section{Complexidade de algoritmos}
 \
 
@@ -27,7 +14,7 @@ Tempo de execução, armazenamento e robustez são algumas características que 
 
 A \textbf{complexidade do tempo de execução} de um algoritmo é avaliada para estimar sua eficiência antes da implementação. A eficiência é representada por uma função que recebe o tamanho da entrada do algoritmo como parâmetro.
 
-Ao longo das sessões será utilizado o modelo \textit{random-access machine} (RAM), assim consideramos que um único processador realize as tarefas de forma sequencial, com operações básicas como as aritméticas ou comparações com custo constante e com os dados armazenados na memória.
+Ao longo das sessões será utilizado o modelo \textit{random-access machine} (RAM), assim consideramos que um único processador realiza as tarefas de forma sequencial, com operações básicas como as aritméticas ou comparações, com custo constante e com os dados armazenados na memória.
 
 \subsection{Crescimento assintótico de funções}
 \
@@ -50,7 +37,7 @@ Sabendo $g(n)=\lceil\frac{n}{2}\rceil+10$ e $f(n)=n$, encontrar $k$ e $n_0$ tais
 
 Se $k=1$ e $n_0=21$, por exemplo, então $f(n_0)=\lceil\frac{21}{2}\rceil+10 = 21$ e $g(n_0)=21$ e uma solução foi encontrada. Podem haver mais soluções.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 2 (Caso sem solução)}
 
@@ -58,7 +45,7 @@ Se $g(n)=n^3$ e $f(n)=n^2$, encontrar $k$ e $n_0$ tais que $g(n)\leq kf(n), \ \f
 \[n^3\leq kn^2 \Rightarrow n\leq k, \ \forall n\geq n_0. \]
 É impossível que uma função linear seja sempre menor ou igual a uma constante, portanto não há solução.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Notação $O$}
 \
@@ -85,7 +72,7 @@ $k=3$ e $n_0=1$ satisfazem $g(n)\in O(f(n))$. Basta substituir os valores na des
 
 A desigualdade é verdadeira para todo $n\geq 1$, em outras palavras $n_0=1$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \begin{figure}
   \centering
@@ -119,7 +106,7 @@ Seja $f(n)=2n^2$, verifique se $f(n)\in\Omega(n^2)$, $f(n)\in\Omega(n\log(n))$ e
 
 Como $n \prec n\log(n) \prec n^2 \approx 2n^2$, então é possível dizer que $2n^2\in\Omega(n^2)$, $2n^2\in\Omega(n\log(n))$ e $2n^2\in\Omega(n)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Notação $\Theta$}
 \
@@ -155,7 +142,7 @@ Na segunda inequação $\frac{1}{2}-\frac{3}{n}\geq k_0$, se escolhermos $k_0=\f
 
 Dessa forma, para $n\leq 7$ ou seja$n_0=7$, são escolhidas $k_0=\frac{1}{14}$ e $k_1=\frac{1}{2}$, e pela definição $\frac{n^2}{2}-3n\in\Theta(n^2)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Notação $o$ e $\omega$}
 \
@@ -195,7 +182,7 @@ Prove que $2n\in o(n^2)$ mas $2n^2\notin o(n^2)$.
 
 Assim, $2n\in o(n^2)$ é uma expressão válida para todos os valores de $k>0$ e $n_0=1$ e como o limite no segundo caso não tende a zero, não existem valores $k>0$ e $n_0$ que satisfaçam a definição da notação $o$, portanto $2n^2\notin o(n^2)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsection{Identidades de notação assintótica}
 \
@@ -249,7 +236,7 @@ Deve-se sempre procurar expressar o custo assintótico de algoritmos da forma ma
 
 O algoritmo para encontrar um elemento $k$ em um vetor não ordenado de tamanho $n$ tem custo $O(n)$ no pior caso. É possível dizer que no pior caso o algoritmo é $O(n^2)$, no entanto, esse custo não define um limite superior firme, que é $O(n)$ e a função $f(n)=n$ que deve ser usada.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Constantes}
 \
@@ -266,7 +253,7 @@ Operações aritméticas e atribuições levam um custo constante e distinto par
 
 A chamada \textbf{função de complexidade}, são os valores explícitos $f(n)=k_0+k_1+k_2=k_3$ ou $f(n)=3$, a \textbf{ordem de complexidade} é a ordem expressa em notação assintótica apenas com os termos dominantes, ignorando constantes e termos assintoticamente irrelevantes, $f(n)=O(1)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Laços de iteração}
 \
@@ -303,7 +290,7 @@ A complexidade de espaço nesse algoritmo também pode ser estimada.
 
 Somando as complexidades de (1) e (2), obtemos $S(n)=n+3$ e $S(n)=O(n)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 2 (Laços aninhados)}
 
@@ -318,7 +305,7 @@ Note que a cada iteração do primeiro laço, o segundo executa $n+1$ comparaç�
 
 Generalizando, sejam $i_0, \ i_1, ... \ , i_{k-1}$, $k$ variáveis distribuídas entre $k$ laços de iteração, onde $i_k<n$ e $i_k++$ para todo laço de iteração, ignorando outros procedimentos, podemos estimar a complexidade como $g(n)=O(n^k)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 3}
 
@@ -336,7 +323,7 @@ Nos laços de iteração aninhados abaixo, repare a comparação $j<i$.
 
 Sendo assim, a complexidade do algoritmo é $O(n^2)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 4 (Passos diferentes)}
 
@@ -349,7 +336,7 @@ Repare no passo do laço de repetição abaixo $i:=i+k$. Onde $k$ é alguma cons
 
 Se $i$ é incrementado de $k$ em $k$, o procedimento é executado $\frac{n}{k}$ vezes e o laço realiza $\frac{n}{k}+1$ comparações. A complexidade do algoritmo é $O(n)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 5 (Condição de parada)}
 
@@ -385,7 +372,7 @@ Primeiramente, qual o comportamento da variável $j$ a medida que $i$ é increme
 
 A complexidade desse algoritmo é $O(\sqrt{n})$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 6}
 
@@ -402,7 +389,7 @@ A complexidade desse algoritmo é $O(\sqrt{n})$.
 
 A complexidade do algoritmo é $O(log(n))$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 7}
 
@@ -413,7 +400,7 @@ A complexidade do algoritmo é $O(log(n))$.
 
 A condição de parada do laço de iteração é $i^2  \leq n$, o algoritmo tem complexidade $O(\sqrt{n})$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Fases}
 
@@ -432,7 +419,7 @@ No pseudocódigo abaixo, o laço com maior complexidade é o segundo, $O(n^2)$. 
             //procedimento
 \end{lstlisting}
     
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 2 (Dependência de fases)}  
 
@@ -453,7 +440,7 @@ No pseudocódigo abaixo, a variável $p$ cria uma dependência entre os laços, 
 
 A complexidade nessa caso é $O(\log\log(n))$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Várias variáveis}
 \
@@ -470,7 +457,7 @@ Em alguns casos a complexidade pode depender de mais de uma variável e sua orde
 
 Nesse caso a complexidade é $O(nm)$.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsubsection{Recursão}
 \
@@ -496,7 +483,7 @@ A complexidade do tempo de execução de funções recursivas depende do número
 A complexidade total é o produto da complexidade de cada chamada e da complexidade da quantidade de chamadas, dessa forma a complexidade é $O(n)$.
 
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \textbf{Exemplo 2} 
 
@@ -518,7 +505,7 @@ A complexidade total é o produto da complexidade de cada chamada e da complexid
 A complexidade é $O(2^n)$.
  
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsection{Classes de complexidade}
 
@@ -584,7 +571,7 @@ Se a chave estiver em uma posição $r$, serão feitas $r$ comparações até en
 
 (3) No pior caso, todas as comparações são feitas, isso acontece se o elemento não estiver no vetor ou se ele assumir a ultima posição, sendo feita $n$ comparações $T(n)=n$ e a função complexidade e $T(n) \in O(n)$ é a ordem de complexidade.
 
-{\raggedleft $\bigtriangleup$ \par}
+{\raggedleft $\bullet$ \par}
 
 \subsection{Classes de algoritmo e o algoritmo ótimo}
 \
