@@ -141,7 +141,7 @@ A chamada \texttt{fibonacci(n-1)} faz mais chamadas subsequentes do que a chamad
 
 Fazendo em $T(0)=T(1)=1$, o termo $T(n-r)=T(0)$ leva a $n=r$. $T(n) = 2^n + (2^n-1)k \in O(2^n)$. Logo o limite assintótico da cota superior é exponencial.
 
-Entretanto, algo importante deve ser dito, aproximar as duas chamadas do algoritmo recursivo nos entrega, no caso anterior, a cota superior da complexidade de tempo de execução do algoritmo. A complexidade real do algoritmo recursivo de Fibonacci é na verdade $O(\phi^n)\approx O(1,62^n)$.
+Entretanto, algo importante deve ser dito, aproximar as duas chamadas do algoritmo recursivo nos entrega, no caso anterior, a cota superior da complexidade de tempo de execução do algoritmo, com efeito, é errado dizer que a complexidade de tal algoritmo recursivo está em $\Theta(2^n)$. A complexidade real do algoritmo recursivo de Fibonacci é na verdade $O(\phi^n)\approx O(1,62^n)$.
 
 Um fato interessante é que a relação de recorrência encontrada no momento do cálculo de complexidade $T(n)=T(n-1)+T(n-2)+O(1)$ se assemelha bastante a relação de recorrência da própria função de Fibonacci $a_n=a_{n-1}+a_{n-2}$. Em uma próxima sub sessão será apresentado um método capaz de encontrar uma solução $g(n)$ para o termo geral da série de Fibonacci que tem o termo mais significativo $\Bigr(\frac{1+\sqrt{5}}{2}\Bigr)^n < 2^n$. Sabendo que se $a<b$ então $a^n \in O(b^n)$ então é possível dizer $a_n \in O(1,62^n) \subset O(2^n)$.
 
@@ -152,7 +152,7 @@ A complexidade do algoritmo recursivo de Fibonacci pode ter uma solução assint
 
 Na árvore de recursão para o algoritmo recursivo de Fibonacci, o custo de uma função dependera das próximas chamadas e observamos o crescimento de uma árvore binária. A figura 6 ilustra um diagrama da árvore de recursão. Note que a quantidade de chamadas aproxima-se de $2^n$, encontrando uma cota superior para a complexidade.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.7\linewidth]{img/arvorerecursaofib.png}
     \caption{Árvore de recursão para o algoritmo recursivo de Fibonacci.}
@@ -174,12 +174,14 @@ Dentre os algoritmos que seguem essa estratégia estão o \texttt{algoritmo num�
 
 A busca binária é um algoritmo para encontrar um valor em um vetor ordenado. O algoritmo consiste em buscar sempre o valor no meio do vetor, como este está ordenado, caso o valor procurado seja menor que o palpite, o algoritmo reduz a busca apenas a metade a esquerda do valor, o mesmo ocorre se o valor for maior, mas com a metade a direita. O problema então tem seu tamanho dividido, aproximadamente, pela metade do tamanho original sucessivamente, a complexidade do tempo de execução da busca binária, \texttt{binary\_search}, está em $O(\log n)$.
 
-\begin{figure}
+\begin{figure}[h]
   \centering
-  \includegraphics[width=1\linewidth]{img/binary_search.png}
-    \caption{Diagrama de representação da busca binária, os elementos em cinza escuro são os eliminados do vetor a medida que o algoritmo é executado}
+  \includegraphics[width=1\linewidth]{img/binary_search.jpg}
+    \caption{Diagrama de representação da busca binária, os elementos em azul são os eliminados do vetor a medida que o algoritmo é executado, o algoritmo busca pela chave de valor sete também marcada em azul.}
     \label{binary_search}
 \end{figure}
+
+\newpage
 
 No pseudocódigo abaixo, \texttt{v} é o valor procurado, \texttt{h} e \texttt{l} indicam as extremidades do vetor, que será dividido em sub vetores.
 

@@ -1,19 +1,34 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{listings}
+\usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{wasysym}
 \usepackage[brazilian]{babel}
 \usepackage{hyperref}
-
+\usepackage{eso-pic,graphicx}
+\usepackage{float}
 \usepackage{mathptmx}
 \usepackage[margin=2cm]{geometry}
+
+
+\definecolor{comment}{rgb}{0.8,0.8,0.8}
+
+\lstdefinestyle{s}{ 
+    commentstyle=\color{comment}
+}
+
+\lstset{style=s}
 
 
 
 \title{\Huge\textbf{Estrutura de Dados}}
 \author{}
 \date{\textbf{Universidade Federal de Minas Gerais}}
+
+
+
+
 
 \begin{document}
 
@@ -45,8 +60,6 @@ Augusto Guerra de Lima
 
 \newpage
 
-
-
 \tableofcontents
 
 \newpage
@@ -54,6 +67,8 @@ Augusto Guerra de Lima
 \include{complexity}
 
 \include{recurrences}
+
+\include{sorttheory}
 
 \include{C}
 
