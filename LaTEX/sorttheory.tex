@@ -17,7 +17,7 @@ O algoritmo de ordenação por bolha ou ordenação por flutuação, ou ainda, d
   \label{bubblesort}
 \end{figure}
 
-É perceptível que as operações mais feitas no algoritmo em questão são as comparações e as trocas. O código em C a seguir descreve as instruções para algoritmo \texttt{bubble\_sort} que ordena um vetor de tamanho $n$ indexado de $0$ a $n-1$ cujo os elementos pertencem à $\mathbb{Z}$ . A função \texttt{swap} é responsável por trocar os elementos de posição, a flag \texttt{trocou} tem a funcionalidade de verificar se alguma troca foi efetuada, ela será útil pois, caso não seja realizadas trocas o vetor já está ordenado, no entanto as iterações ou chamadas podem ainda não ter chegado ao fim. Na melhor das hipóteses, caso o vetor já esteja ordenado basta uma iteração, pois a flag \texttt{trocou} dirá que nenhuma troca foi efetuada.
+É perceptível que as operações mais feitas no algoritmo em questão são as \textbf{comparações} e as \textbf{trocas}. O código em C a seguir descreve as instruções para algoritmo \texttt{bubble\_sort} que ordena um vetor de tamanho $n$ indexado de $0$ a $n-1$ cujo os elementos pertencem à $\mathbb{Z}$ . A função \texttt{swap} é responsável por trocar os elementos de posição, a flag \texttt{trocou} tem a funcionalidade de verificar se alguma troca foi efetuada, ela será útil pois, caso não seja realizadas trocas o vetor já está ordenado, no entanto as iterações ou chamadas podem ainda não ter chegado ao fim. Na melhor das hipóteses, caso o vetor já esteja ordenado basta uma iteração, pois a flag \texttt{trocou} dirá que nenhuma troca foi efetuada.
 
 \begin{lstlisting}[language=C, frame=single]
     void bubble_sort(int *V, int n)
@@ -90,14 +90,32 @@ Para satisfazer a inequação acima, basta escolher $k=\frac{1}{2}$ e $n_0=1$, s
 
 {\raggedleft $\blacksquare $ \par}
 
+A análise intuitiva do \textbf{melhor caso} é bem simples, quando a flag \texttt{trocou} não receber o valor $1$ significa que o vetor está ordenado. Se o vetor já estiver ordenado, apenas $n-1$ iterações no laço exterior são realizadas e ele termina a execução; $n-1 \in O(n)$, então a complexidade do tempo de execução do melhor caso é linear.
+
+Considere no melhor caso que atribuir valor a flag tenha um custo constante $O(1)$ e que são realizadas $n-1$ comparações, mas nenhuma chamada de \texttt{swap}, portanto, nenhuma troca. Dessa forma, a flag será $0$ e a comparação final devolvera um retorno para o método, portanto a função complexidade é $f(n) = n-1+O(1)$, considerando que $\exists k > 0; \ n-1 \leq kn$, então $f(n) \in O(n)$. Sendo assim, a complexidade do tempo de execução no melhor caso para \texttt{bubble\_sort} está em $O(n)$.
+
+{\raggedleft $\blacksquare $ \par}
+
+Em penúltimo lugar, a análise de complexidade do \textbf{caso médio} para o tempo de execução do algoritmo de ordenação por bolha deve receber algumas considerações. Em primeiro lugar, considere que em metade das comparações são realizadas trocas, isso pode ser justificado se atribuirmos $0$ "uma comparação foi executada mas uma troca não foi executada" \ e $1$ "uma comparação foi executada e uma troca foi executada"; Assim sendo, o valor esperado $E[x]$ é igual a $\frac{1}{2}$. Obtem-se então
+
+\[\sum_{i=1}^{n-1}\sum_{k=1}^{i-1}\frac{1}{2}\kappa = \frac{1}{2}\sum_{i=1}^{n-1}\kappa(i-1) =  \frac{\kappa (n-1)n}{4}\]
+
+de $\frac{(n-1)n}{2} \in O(n^2)$ e $kO(f(n))=O(f(n))$ encontra-se o limite assintótico $\frac{\kappa(n-1)n}{4} \in O(n^2)$ que é a complexidade do tempo de execução do caso médio do algoritmo em questão.
+
+{\raggedleft $\blacksquare $ \par}
+
+Por fim, mas não menos importante, para avaliar o \textbf{complexidade de espaço} requerido para a ordenação por bolha não é considerado o espaço onde o vetor a ser ordenado está armazenado, pois o algoritmo em si não o armazena e nem cria cópias para manipular os elementos do vetor a ser ordenado.
+
+No algoritmo para os iteradores \texttt{i} e \texttt{k}  e para a flag \texttt{trocou} considere um custo constante $1$, assim a função $s(n)$ complexidade de espaço é $s(n) = 3 \in O(1)$.
+
 \subsubsection{Sumário ordenação por bolha}
 
 \begin{table}[h]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Algoritmo} & \textbf{Pior Caso} & \textbf{Melhor Caso} & \textbf{Caso Médio} & \textbf{Estabilidade} \\ \hline
-Ordenação por bolha       & \(O(n^2)\)         & \(O(n)\)             & \(O(n^2)\)           & Estável                \\ \hline
+\textbf{Algoritmo} & \textbf{Pior caso} & \textbf{Caso médio} & \textbf{Melhor caso} & \textbf{Estabilidade} \\ \hline
+Ordenação por bolha       & \(O(n^2)\)         & \(O(n^2)\)             & \(O(n)\)           & Estável                \\ \hline
 \end{tabular}
 \caption{Complexidade e estabilidade do Algoritmo de ordenação por bolha.}
 \label{Sumario bubble sort}
