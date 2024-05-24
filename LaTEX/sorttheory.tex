@@ -1,259 +1,55 @@
 \section{Teoria da Ordenação}
-\
 
-O \textbf{problema da ordenação} é recorrente na ciência da computação, o motivo para isso é bem simples: Muitos problemas algorítmicos são mais fáceis de serem resolvidos quando os dados estão distribuídos de forma ordenada.
+O \textbf{problema da ordenação} é recorrente em ciência da computação, seja a entrada da função de ordenação uma lista $[a_0,...,a_n]$, a saída deve ser uma permutação de forma que $a_0'<...<a_n'$.
 
-Nas próximas sub sessões serão apresentados alguns algoritmos de ordenação, inicialmente serão apresentados algoritmos ingênuos com complexidade polinomial, logo após, algoritmos de ordenação eficientes e por fim algoritmos com complexidade de tempo de execução linear. Para fins de simplificação, os algoritmos serão apresentados para ordenar vetores de números inteiros, no entanto, qualquer tipo de dado pode ser ordenado por um parâmetro. 
+Os algoritmos que realizam a ordenação são diversos, diz que um algoritmo ordena \textbf{no lugar} quando não são realizadas cópias do arranjo incipiente, ou de sub arranjos. Um algoritmo é \textbf{estável} se a ordem relativa de dois elementos não é alterada, isto é, dado dois elementos $a_0=a_1=k$, a permutação final deve estar ordenada de maneira que o elemento $a_0$ seja indexado antes do elemento $a_1$.
 
 \subsection{Ordenação por bolha}
-\
 
-O algoritmo de ordenação por bolha ou ordenação por flutuação, ou ainda, do inglês \textit{bubble sort}, é um algoritmo de ordenação de complexidade de tempo de execução polinomial. O \textit{bubble sort} funciona (1) \textbf{comparando} um elemento com o imediatamente seguinte e (2) \textbf{trocando-os} caso os elementos adjacentes estejam desordenados. Esse algoritmo repete tais ações para sub vetores até que o vetor esteja ordenado.
+O algoritmo de ordenação por bolha, ou ordenação por flutuação é simples. O método \textbf{compara} elementos adjacentes e os \textbf{movimenta} se estiverem desordenados. Na primeira iteração o maior elemento se encontra no final do arranjo, então a próxima iteração não passa pela última posição. Ao fim da $k$-ésima iteração, é garantido que o $k$-ésimo maior elemento se encontra na sua posição ordenada.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=.9\linewidth]{img/bubble_sort.jpg}
-  \caption{Ordenação por bolha atuando em um vetor cujo os elementos são números inteiros; Os elementos em azul são os maiores a cada iteração ou chamada do algoritmo e são postos no final do sub vetor e por fim ordenando o vetor por completo.}
-  \label{bubble_sort}
+  \includegraphics[width=1\linewidth]{img/bubble_sort.jpg}
+    \caption{Diagrama do algoritmo de ordenação por bolha em uma lista de inteiros, o maior elemento de um sub arranjo é "carregado" para sua posição correta.}
+    \label{bubble_sort}
 \end{figure}
-
-É perceptível que as operações mais feitas no algoritmo em questão são as \textbf{comparações} e as \textbf{trocas}. O código em C a seguir descreve as instruções para algoritmo \texttt{bubble\_sort} que ordena um vetor de tamanho $n$ indexado de $0$ a $n-1$ cujo os elementos pertencem à $\mathbb{Z}$ . A função \texttt{swap} é responsável por trocar os elementos de posição, a flag \texttt{trocou} tem a funcionalidade de verificar se alguma troca foi efetuada, ela será útil pois, caso não seja realizadas trocas o vetor já está ordenado, no entanto as iterações ou chamadas podem ainda não ter chegado ao fim. Na melhor das hipóteses, caso o vetor já esteja ordenado basta uma iteração, pois a flag \texttt{trocou} dirá que nenhuma troca foi efetuada.
-
-\begin{lstlisting}[language=C, frame=single]
-    void bubble_sort(int *V, int n)
-    {
-        for(int i=0; i<n-1; i++)
-        {
-            int trocou = 0;
-            for(int k=0; k<n-1-i; k++)
-            {
-                if(*(V+k)>*(V+k+1))
-                {
-                    swap(V+k, V+k+1);
-                    trocou=1;
-                }
-            }
-            if(trocou==0) break;
-        }
-    }
-\end{lstlisting}
-
-O código supracitado é uma versão iterativa do algoritmo que utiliza a flag de verificação de troca, também é possível implementar uma versão recursiva baseada em chamadas de sub vetores.
-
-\begin{lstlisting}[language=C, frame=single]
-    void bubble_sort_recursive(int *V, int n)
-    {
-        if(n<=1) return;
-        int trocou = 0;
-        for(int i=0; i<n-1; i++)
-        {
-            if(*(V+i)>*(V+i+1))
-                {
-                    swap(V+i, V+i+1);
-                    trocou=1;
-                }
-        }
-        if(trocou==0) return;
-
-        bubble_sort_recursive(V, n-1);
-    }
-\end{lstlisting}
-
-\subsubsection{Análise de complexidade}
-\
-
-A intuição por trás da análise de complexidade da ordenação por bolha é pensar que, no \textbf{pior caso}, todas as operações possíveis são realizadas, para que isso aconteça o vetor deve estar em ordem decrescente caso queiramos uma ordenação crescente.
-
-Considere a versão não recursiva, é visível que 
-
-(1) O primeiro laço de iteração \texttt{for} realiza seu procedimento interno $n-1$ vezes;
-
-(2) O segundo laço tem um comportamento baseado no iterador \texttt{i}, onde seu procedimento interno é executado $n-1-i$ vezes, tem-se então
-
-\[(n-1-0)+(n-1-1)+(n-1-2)+...+1 = \frac{(n-1)n}{2}\in O(n^2).\]
-
-A análise acima é suficiente para demonstrar a cota superior da complexidade do tempo de execução. Se os índices do vetor forem pensados como elementos pertencentes à $\mathbb{N}$ então é possível escrever 
-
-\[\sum_{i=1}^{n-1}\sum_{k=1}^{i-1}\kappa.\]
-
-Onde $\kappa$ é uma constante que representa o custo da operação de troca. No \textbf{pior caso} essa constante é somada a cada iteração, já que a operação de troca é sempre feita.
-
-\[\sum_{i=1}^{n-1}\sum_{k=1}^{i-1}\kappa = \sum_{i=1}^{n-1}\kappa(i-1) = \kappa[1+2+...+(n-2)+(n-1)]=\frac{\kappa(n-1)n}{2}.\]
-
-Esse é o resultado obtido na análise intuitiva, agora basta provar que a progressão aritmética encontrada está em $O(n^2)$. Lembrando que $O(kg(n)) = kO(g(n)) = O(g(n))$, para demonstrar que $\frac{\kappa(n-1)n}{2} \in O(n^2)$, basta encontrar constantes $n_0$ , $k > 0$ tais que $\frac{(n-1)n}{2}\leq kn^2 \ \forall n\geq n_0$.
-
-\[\frac{(n-1)n}{2}=\frac{n^2 - n}{2}\leq kn^2 \Rightarrow \Bigr(\frac{1}{2}-k\Bigr)n^2 - \frac{n}{2}\leq 0 \ \forall n\geq n_0.\]
-
-Para satisfazer a inequação acima, basta escolher $k=\frac{1}{2}$ e $n_0=1$, substituindo
-
-\[\Bigr(\frac{1}{2}-\frac{1}{2}\Bigr) - \frac{1}{2} \leq 0 \Rightarrow-\frac{1}{2} \leq 0; \ \therefore \frac{\kappa(n-1)n}{2}\in O(n^2).\]
-
-{\raggedleft $\blacksquare $ \par}
-
-A análise intuitiva do \textbf{melhor caso} é bem simples, quando a flag \texttt{trocou} não receber o valor $1$ significa que o vetor está ordenado. Se o vetor já estiver ordenado, apenas $n-1$ iterações no laço exterior são realizadas e ele termina a execução; $n-1 \in O(n)$, então a complexidade do tempo de execução do melhor caso é linear.
-
-Considere no melhor caso que atribuir valor a flag tenha um custo constante $O(1)$ e que são realizadas $n-1$ comparações, mas nenhuma chamada de \texttt{swap}, portanto, nenhuma troca. Dessa forma, a flag será $0$ e a comparação final devolvera um retorno para o método, portanto a função complexidade é $f(n) = n-1+O(1)$, considerando que $\exists k > 0; \ n-1 \leq kn$, então $f(n) \in O(n)$. Sendo assim, a complexidade do tempo de execução no melhor caso para \texttt{bubble\_sort} está em $O(n)$.
-
-{\raggedleft $\blacksquare $ \par}
-
-Em penúltimo lugar, a análise de complexidade do \textbf{caso médio} para o tempo de execução do algoritmo de ordenação por bolha deve receber algumas considerações. Em primeiro lugar, considere que em metade das comparações são realizadas trocas, isso pode ser justificado se atribuirmos $0$ "uma comparação foi executada mas uma troca não foi executada" \ e $1$ "uma comparação foi executada e uma troca foi executada"; Assim sendo, o valor esperado $E[x]$ é igual a $\frac{1}{2}$. Obtem-se então
-
-\[\sum_{i=1}^{n-1}\sum_{k=1}^{i-1}\frac{1}{2}\kappa = \frac{1}{2}\sum_{i=1}^{n-1}\kappa(i-1) =  \frac{\kappa (n-1)n}{4}\]
-
-de $\frac{(n-1)n}{2} \in O(n^2)$ e $kO(f(n))=O(f(n))$ encontra-se o limite assintótico $\frac{\kappa(n-1)n}{4} \in O(n^2)$ que é a complexidade do tempo de execução do caso médio do algoritmo em questão.
-
-{\raggedleft $\blacksquare $ \par}
-
-Por fim, mas não menos importante, para avaliar o \textbf{complexidade de espaço} requerido para a ordenação por bolha não é considerado o espaço onde o vetor a ser ordenado está armazenado, pois o algoritmo em si não o armazena e nem cria cópias para manipular os elementos do vetor a ser ordenado.
-
-No algoritmo para os iteradores \texttt{i} e \texttt{k}  e para a flag \texttt{trocou} considere um custo constante $\sigma$, assim a função $s(n)$ complexidade de espaço é $s(n) = 3\sigma \in O(1)$.
-
-\subsubsection{Estabilidade}
-\
-
-Dado um vetor com elementos repetidos, a ordem relativa entre esses elementos é definida pela posição inicial que aparecem no vetor. Considere o vetor $[2,2,1,1,3]$; Os elementos repetidos $2's$ e $1's$ são idênticos, mas começam com uma posição relativa, é possível então, diferencia-los como $[2_a, 2_b, 1_a, 1_b, 3]$. Um algoritmo de ordenação baseado em comparação pode ser considerado estável quando mantém a ordem relativa das posições iniciais entre elementos idênticos de um vetor.
-
-No vetor supracitado o algoritmo de ordenação por bolha trabalharia da seguinte forma:
-\[[2_a,2_b,1_a,1_b,3]\rightarrow[2_a,2_b,1_a,1_b,3]\rightarrow[2_a,1_a,2_b,1_b,3]\rightarrow[2_a,1_a,1_b,2_b,3]\rightarrow ... \rightarrow[1_a,1_b,2_a,2_b,3].\]
-
-Observe que, na ordenação acima, não houve uma mudança na posição relativa dos elementos idênticos e que o vetor foi ordenado. O \textit{bubble sort} é um algoritmo de ordenação baseado em comparação estável.
-
-De maneira mais formal, (1) considere que para uma lista de apenas um elemento, não há necessidade de ordenação pois a mesma já se encontra ordenada; (2) suponha que o algoritmo \textit{bubble sort} mantenha a posição relativa em um vetor de tamanho $n$; (3) Considere um vetor de tamanho $n+1$. Durante a passagem do algoritmo pelos elementos, uma troca só ocorrerá caso o elemento na posição $k$ seja menor que o elemento da posição $k+1$. No entanto, se os elementos possuírem o mesmo valor, isso significa que permanecerão na mesma ordem relativa em relação uns aos outros, portanto, o algoritmo de ordenação por bolha é \textbf{estável}.
-
-{\raggedleft $\blacksquare $ \par}
-
-
-\subsubsection{Sumário ordenação por bolha}
-\ 
-
-O algoritmo de ordenação por bolha é um algoritmo com complexidade de tempo de execução quadrática na maioria das vezes, ademais, é um algoritmo estável, simples de entender e que funciona bem para um conjunto pequeno de dados.
-
-\begin{table}[h]
-  \centering
-  \label{tab:bubble-sort}
-  \begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    \textbf{Algoritmo} & \textbf{Melhor caso} & \textbf{Caso médio} & \textbf{Pior caso} & \textbf{Espaço}& \textbf{Estabilidade} \\ \hline
-    Ordenação por bolha       & \( O(n) \)           & \( O(n^2) \)         & \( O(n^2) \)        & \(O(1)\) & Estável               \\ \hline
-  \end{tabular}
-  \caption{Complexidade e estabilidade do algoritmo de ordenação por bolha}
-\end{table}
-
-\newpage
 
 \subsection{Ordenação por seleção}
-\ 
 
-O algoritmo de ordenação por seleção, \textit{selection sort}, é um algoritmo de complexidade de tempo de execução de ordem polinomial. A ordenação por seleção funciona (1) A partir da posição $k \ (k=1,...,n-1)$ encontra o menor a partir de \textbf{comparações} e (2) \textbf{troca} o menor encontrado com o elemento da posição $k$. O algoritmo realiza repetidamente tais instruções a cada sub vetor até que o vetor esteja ordenado.
+A ordenação por seleção seleciona o $k$-ésimo menor elemento, guardando seu índice, e então o movimenta para sua posição correta. Mais uma vez as \textbf{comparações} e \textbf{trocas} são as operações mais relevantes desse algoritmo.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=.9\linewidth]{img/selection_sort.jpg}
-  \caption{Ordenação por seleção atuando em um vetor cujo os elementos são números inteiros; Os elementos em azul são as posições iniciais de cada sub vetor e os elementos já ordenados; Os elementos em azul escuro são os menores encontrados a cada sub vetor iterado.}
-  \label{selection_sort}
+  \includegraphics[width=1\linewidth]{img/selection_sort.jpg}
+    \caption{Diagrama representando o algoritmo de ordenação por seleção, o menor elemento é encontrado e após isso trocado com o elemento que estava em sua posição, esse processo é repetido a cada sub lista, ordenando o arranjo inicial.}
+    \label{insertion_sort}
 \end{figure}
 
-O código em C abaixo implementa o algoritmo de ordenação por seleção no método \texttt{selection\_sort} que ordena um vetor de forma crescente cujo os elementos são pertencentes à $\mathbb{Z}$. A variável \texttt{min} armazena o índice do elemento mínimo a cada iteração em um sub vetor.
-
-\begin{lstlisting}[language=C, frame=single]
-
-    void selection_sort(int* V, int n)
-    {
-        for(int i=0;i<n-1;i++)
-        {
-            int min = i;
-            for(int k=i+1;k<n;k++)
-            {
-                if(*(V+min)>*(V+k))
-                {
-                    min = k;
-                }
-            }
-            swap(V+i, V+min);
-        }
-    }  
-\end{lstlisting}
-
-\subsubsection{Análise de complexidade}
-\
-
-\subsubsection{Estabilidade}
-\
-
-O algoritmo de ordenação por seleção não é estável. Para demonstrar tal afirmação basta encontrar um vetor que ao ser operado pelo \textit{selection sort} não mantém a posição relativa de elementos idênticos.
-
-Considere o vetor $[1_a, 2_a, 2_b, 1_b]$; O algoritmo em questão executara os seguintes passos no vetor
-
-\[[1_a, 2_a, 2_b, 1_b]\rightarrow[1_a, 2_a, 2_b, 1_b]\rightarrow[1_a, 1_b, 2_b, 2_a].\]
-
-Observe que o vetor foi ordenado, no entanto, a posição relativa entre os $2's$ não foi mantida. Portanto o algoritmo de ordenação por seleção é \textbf{instável}.
-
-{\raggedleft $\blacksquare $ \par}
-
-\subsubsection{Sumário ordenação por seleção}
-\ 
-
-Com base no que foi apresentado, o algoritmo de ordenação por seleção é um algoritmo de ordenação baseado em comparações com complexidade sempre quadrática, é um algoritmo não estável e de fácil compreensão.
-
-
-\begin{table}[h]
-  \centering
-  \label{tab:bubble-sort}
-  \begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    \textbf{Algoritmo} & \textbf{Melhor caso} & \textbf{Caso médio} & \textbf{Pior caso} & \textbf{Espaço}& \textbf{Estabilidade} \\ \hline
-    Ordenação por seleção       & \( O(n^2) \)           & \( O(n^2) \)         & \( O(n^2) \)        & \(O(1)\) & Instável              \\ \hline
-  \end{tabular}
-  \caption{Complexidade e estabilidade do algoritmo de ordenação por seleção}
-\end{table}
-
-
 \subsection{Ordenação por inserção}
-\ 
 
-O algoritmo de ordenação por inserção, do inglês \textit{insertion sort}, é um algoritmo projetado para listas encadeadas. Por outro lado, ele pode ser aplicado a vetores, desde que um laço de iteração desloque elementos como será apresentado.
+O método de ordenação por inserção é originalmente projetado para uma \textbf{lista encadeada}, isso não impede que ele seja aplicado para ordenação de arranjos. O algoritmo da ordenação por inserção consiste em selecionar um elemento, e compara-lo com os elementos que o antecedem na lista, encontrando sua posição correta e o inserindo nela. As operações relevantes para a complexidade são as \textbf{comparações} e as \textbf{movimentações}.
 
-A essência por trás do algoritmo de ordenação por inserção é encontrar um local para inserir um elemento do vetor. Suas instruções podem ser descritas como (1) um elemento na posição $k \in \mathbb{N}$ é selecionado (2) seu valor é comparado com todos os elementos anteriores até que se encontre um elemento na posição $r<k$ que seja menor que o elemento selecionado (3) no caso de um vetor todos os elementos posteriores a posição $r$ e anteriores a posição $k$ são deslocados para uma posição a frente e (4) por fim, o elemento selecionado é adicionado na posição $r+1$.
+\subsection{Ordenação por intercalação}
 
-No caso de uma lista encadeada, ao ser encontrado o local para inserir o elemento, apenas se deve redirecionar os apontadores para alocar o elemento entre outros dois outrora adjacentes.
+A ordenação por intercalação, \textit{merge sort}, utiliza a estratégia de divisão e conquista para ordenar a lista incipiente. Na etapa de divisão, os sub arranjos são recursivamente divididos aproximadamente na metade, até que contenham apenas um elemento. Em seguida, na etapa de conquista, os elementos são intercalados formando um novo arranjo, agora ordenado, com tamanho sendo a soma dos dois arranjos anteriores.
 
-O seguinte código implementa o algoritmo de ordenação por inserção para um vetor cujo os elementos pertencem a $\mathbb{Z}$. O laço \texttt{while} é responsável pelo deslocamento dos elementos do vetor afim de "abrir" um espaço para a chave a ser inserida. Por último, é importante observar que \texttt{r} deve ser maior que $-1$ para que o \texttt{while} execute, afinal, uma posição indesejada seria acessada a qual o conteúdo é desconhecido, isso também poderia ser contornado por uma \textbf{sentinela}.
+\subsection{Ordenação rápida}
 
-\begin{lstlisting}[language=C, frame=single]
-    void insertion_sort(int* V, int n)
-    {
-        for(int k=1; k<n; k++)
-        {
-            int x = *(V+k); //elemento ou chave
-            r = k-1;
-            while(r>-1 && *(V+r)>x)
-            {
-                *(V+r+1)=*(V+r);
-                r--;
-            }
-            *(V+r+1)=x;
-        }
-    }
-\end{lstlisting}
-
-\subsection{Ordenação por intercalação (merge sort)}
-
-\subsection{Ordenação rápida (quick sort)}
-
-\subsubsection{Medina de três}
-
-\subsubsection{Seleção de elementos}
-
-\subsubsection{Ordenação rápida indireta}
-
-\subsubsection{Ordenação rápida não recursiva}
+O algoritmo de ordenação rápida, \textit{quick sort}, possuí inúmeras implementações. O método escolhe um elemento \textbf{pivô}, em uma iteração pelo arranjo, elementos menores que o pivô são postos anteriormente a ele, o mesmo acontece com os elementos maiores, que são postos após o pivô. Após isso, ocorre a etapa de partição, onde o arranjo é segmentado e os novos arranjos gerados são iterados e também sofrem partições recursivamente até que se tenha a permutação ordenada.
 
 \subsection{Ordenação de Donald Shell}
 
-\subsection{Teorema da ordenação por comparação}
+O método \textit{shell sort} é uma modificação do algoritmo de ordenação por inserção. Enquanto o \textit{insertion sort} realiza as comparações com elementos imediatamente adjacentes, a ordenação de Donald Shell arbitrariamente escolhe um \textbf{espaçamento} entre os elementos a serem comparados, a cada iteração esse espaçamento é diminuído por alguma regra até que a entrada é ordenada no fim do algoritmo. Na implementação canônica o espaceamento escolhido é a cada iteração $h = \frac{n}{2^{k-1}}$, onde $k$ é o número da iteração e $n$ o tamanho da entrada incipiente.
 
 \subsection{Ordenação por contagem}
 
+O algoritmo de ordenação por contagem não é baseado em comparação. Seja uma sequência com elementos entre $0$ e $k$, a abordagem desse método consiste em contar a quantidade de vezes que um elemento $x$ aparece no arranjo, guardando essa quantidade em uma $n$-upla, onde o número de ocorrências é posto no índice $x$ da $n$-upla, para determinar o tamanho da tupla de contagem é preciso conhecer $a priori$ o maior elemento $k$.
+
 \subsection{Ordenação por balde}
 
-\subsection{Ordenação por dígito (radix sort)}
+A ordenação por balde é baseada em \textbf{intervalos} que os elementos do arranjo tomam. Cada intervalo divide o arranjo em sub arranjos, chamados de baldes. Dessa forma, após a segmentação dos elementos em baldes, cada sub arranjo é ordenado por um método de ordenação definido, por exemplo o método da ordenação por inserção.
+
+\subsection{Ordenação por dígito}
+
+A ordenação por dígito, \textit{radix sort}, ordena os elementos a partir de uma transformação de base, binária ou decimal, por exemplo, ordenando os elementos da lista inicial, dígito a dígito. No caso de uma ordenação por dígito binária, cada item é ordenado por sua representação binária (em \textit{bits}), o método realiza partições, segmentando o arranjo de forma similar ao \textit{quick sort}.
