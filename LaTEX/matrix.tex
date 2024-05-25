@@ -1,0 +1,69 @@
+\section{Matrizes e vetores}
+
+A álgebra linear desempenha um papel fundamental na matemática e na computação.
+
+\subsection{Digressão em álgebra linear}
+
+Sem o propósito de findar o tema, alguns conceitos de álgebra linear são relevantes para fundamentar a prática computacional dos algoritmos de matrizes e de operações vetoriais.
+
+\subsubsection{Espaço vetorial}
+
+Um espaço vetorial $V$ nada mais é que um conjunto, seus elementos são denominados vetores, no espaço vetorial existem operações de adição de dois vetores que resulta em uma soma, também pertencente ao espaço vetorial e multiplicação por uma escalar pertencente a um corpo (também um conjunto com propriedades definidas) por um vetor, que resulta em um produto escalar, pertencente ao espaço vetorial. 
+
+Além disso, um espaço vetorial respeita axiomas como elemento neutro e comutatividade, que podem ser encontrados em livros de álgebra linear.
+
+Exemplos de espaços vetoriais espaço, o conjunto ${0}$, o conjunto do números complexos $\mathbb{C}$ e o conjunto $F^{X,\mathbb{R}}$ de todas as funções $f_n: X \rightarrow \mathbb{R}$, onde $X$ é um conjunto não vazio.
+
+\subsubsection{Subespaço vetorial}
+
+É um subconjunto de um espaço vetorial, fechado por adição e multiplicação por escalar, além de possuir o elemento neutro $0$. Um conjunto $S$ é \textbf{conjunto gerador} de um espaço vetorial $V$ quando os elementos de $V$ podem ser expressos por \textbf{combinação linear} dos elementos de $S$.
+
+Como exemplos, é possível dizer que qualquer reta que possa a origem é subespaço de $\mathbb{R}^n$; Que o subespaço formado por um vetor $v$ não nulo pertencente a $\mathbb{R}$ (espaço vetorial nos reais) é a reta que passa pela origem e contem $v$; E que para $u=[a,b]$ e $v=[c,d]$ serem múltiplos, é necessário e suficiente que $ad=bc$, então é possível dizer que se $v$ e $u\in \mathbb{R}^2$ não forem múltiplos, e forem vetores não nulos esses formarão um conjunto que será conjunto gerador de $\mathbb{R}^2$, argumentando que sua combinação linear é igual a um vetor contido no plano real, formando um sistema linear com determinante diferente de zero $(ad\neq bc \rightarrow ad - bc \neq 0)$, ou seja, possui solução para as constantes da combinação linear.
+
+\subsection{Operações vetoriais}
+
+\subsubsection{Norma euclidiana}
+
+\begin{lstlisting}[language=C, frame=single]
+float norma(float* v, int n)
+{
+    float somasq=0.0;
+    for(int i=0;i<n;i++)
+    {
+        somasq+=v[i]*v[i];
+    }
+    return(sqrt(somasq));
+}
+\end{lstlisting}
+
+\subsubsection{Produto escalar}
+
+O produto escalar, ou produto interno, é uma operação entre dois vetores de tamanho $n$ que resulta em uma escalar. Definido por
+
+\[u\cdot v = [a_0,...,a_k]\cdot[b_0,...,b_k] = a_0b_0+...+a_kb_k.\]
+
+A definição geométrica do produto escalar, é o produto das normas euclidianas e do cosseno do ângulo entre esses vetores.
+
+\[u\cdot v = |u||v|\cos(\theta).\]
+
+Seu algoritmo em linguagem de programação C muito simples tem complexidade de tempo de execução $O(n)$, e complexidade de espaço $O(1)$.
+
+\begin{lstlisting}[language=C, frame=single]
+float produto_interno(float* u, float* v, int n)
+{
+    float w = 0.0;
+    for(int i = 0; i<n; i++)
+    {
+        w+=u[i]*v[i];
+    }
+    return(w);
+}
+\end{lstlisting}
+
+\subsubsection{Projeção}
+
+A projeção do vetor $u$ sobre o vetor $v$, é uma operação que avalia a componente de $u$ que está na direção de $v$.
+
+Definida por
+
+\[proj_v(u) = \frac{u\cdot v}{|v|^2} v\]
